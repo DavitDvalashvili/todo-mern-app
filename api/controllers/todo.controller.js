@@ -2,16 +2,18 @@ import todoModel from "../models/todo.model.js";
 
 export const getTodo = async (req, res, next) => {
   const active = req.query.active;
+  const order = req.query.order || "desc"; // Default order is "desc"
+  const sort = "createdAt";
+
   try {
     let todo;
 
-    // Check if the 'active' query parameter exists and is truthy
     if (active) {
-      todo = await todoModel.find({ active });
+      todo = await todoModel.find({ active }).sort({ [sort]: order });
     } else {
-      // If 'active' query parameter does not exist or is falsy, query all todo items
-      todo = await todoModel.find();
+      todo = await todoModel.find().sort({ [sort]: order });
     }
+
     res.status(200).send(todo);
   } catch (error) {
     console.error(error);
@@ -44,7 +46,7 @@ export const deleteTodo = async (req, res, next) => {
       // If 'id' parameter is not provided, return 404 Not Found response
       return res.status(404).send({ message: "Task not found" });
     } else if (id === "completed") {
-      // If 'id' parameter is provided and equals "completed", delete all active=false todos
+      // If 'id' parameter is provided and equals "completed", delete all active=false todo
       const deleteResult = await todoModel.deleteMany({ active: false });
       if (deleteResult.deletedCount === 0) {
         return res.status(404).send({ message: "No completed tasks found" });
@@ -58,6 +60,24 @@ export const deleteTodo = async (req, res, next) => {
     }
 
     res.status(200).send({ message: "Tasks deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+export const updateTodo = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const todo = await todoModel.findById(id);
+
+    if (!todo) {
+      return res.status(404).send({ message: "Task not found" });
+    }
+    const updatedTodo = await todoModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).send(updatedTodo);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Internal server error" });

@@ -1,20 +1,23 @@
 import mongoose from "mongoose";
 
-const TodoSchema = new mongoose.Schema({
-  id: String,
-  todo: {
-    type: String,
-    require: true,
+const TodoSchema = new mongoose.Schema(
+  {
+    id: String,
+    todo: {
+      type: String,
+      require: true,
+    },
+    active: {
+      type: String,
+      default: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  active: {
-    type: String,
-    default: true,
-  },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
-});
+  { timestamps: true }
+);
 
 TodoSchema.set("toJSON", {
   transform: (document, returnObject) => {

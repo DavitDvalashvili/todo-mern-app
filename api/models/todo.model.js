@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 
 const TodoSchema = new mongoose.Schema({
   id: String,
-  task: String,
-  isCompleted: {
+  todo: {
     type: String,
-    default: false,
+    require: true,
+  },
+  active: {
+    type: String,
+    default: true,
   },
   createdAt: {
     type: Date,

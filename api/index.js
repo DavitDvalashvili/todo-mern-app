@@ -5,6 +5,7 @@ import todoRouter from "./routes/todo.router.js";
 dotenv.config();
 
 const app = express(); // Create an instance of Express
+app.use(express.json());
 const PORT = process.env.PORT || 3002; // Define the port number from environment variables or default to 3002
 const MONGO_URL = process.env.MONGO_URL;
 

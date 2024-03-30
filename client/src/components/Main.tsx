@@ -4,6 +4,7 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useAppSelector } from "../App/hook";
 import { InitialTheme } from "../types";
 import { useWindowSize } from "@uidotdev/usehooks";
+import TodoContainer from "./TodoContainer";
 
 const Main = () => {
   const windowWidth = useWindowSize().width;
@@ -82,7 +83,7 @@ const Main = () => {
                 ? darkTheme.palette.primary.main
                 : lightTheme.palette.primary.main,
               color: darkMode
-                ? lightTheme.palette.primary.secondTextColor
+                ? darkTheme.palette.primary.secondTextColor
                 : lightTheme.palette.primary.secondTextColor,
               borderRadius: "50%",
               width: {
@@ -114,13 +115,7 @@ const Main = () => {
           placeholder="Create a new todo…"
         />
       </Box>
-
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id nobis
-        suscipit esse non doloremque magni quasi in illo consectetur nostrum
-        ipsam temporibus tempora sequi dicta, ipsum quaerat distinctio quia
-        fugit!
-      </div>
+      <TodoContainer />
     </>
   );
 };

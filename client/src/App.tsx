@@ -21,6 +21,8 @@ function App() {
             boxSizing: "border-box",
             padding: "0px",
             margin: "0px",
+          },
+          body: {
             backgroundColor: darkMode
               ? darkTheme.palette.primary.backgroundColor
               : lightTheme.palette.primary.backgroundColor,

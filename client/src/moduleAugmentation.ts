@@ -7,6 +7,7 @@ declare module "@mui/material/styles" {
     secondTextColor?: string;
     activeTextColor?: string;
     borderColor?: string;
+    hoverColor?: string;
   }
 
   interface SimplePaletteColorOptions {
@@ -15,6 +16,7 @@ declare module "@mui/material/styles" {
     secondTextColor?: string;
     activeTextColor?: string;
     borderColor?: string;
+    hoverColor?: string;
   }
 }
 

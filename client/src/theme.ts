@@ -23,6 +23,7 @@ export const lightTheme = createTheme({
       secondTextColor: "#9495A5",
       activeTextColor: "#3A7CFD",
       borderColor: "#E3E4F1",
+      hoverColor: "#494C6B",
     },
   },
 });
@@ -50,6 +51,7 @@ export const darkTheme = createTheme({
       secondTextColor: "#5B5E7E",
       activeTextColor: "#3A7CFD",
       borderColor: "#393A4B",
+      hoverColor: "#E3E4F1",
     },
   },
 });

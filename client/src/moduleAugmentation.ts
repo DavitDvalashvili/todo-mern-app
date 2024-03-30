@@ -4,15 +4,17 @@ declare module "@mui/material/styles" {
   interface PaletteColor {
     backgroundColor?: string;
     mainTextColor?: string;
-    lightTextColor?: string;
+    secondTextColor?: string;
     activeTextColor?: string;
+    borderColor?: string;
   }
 
   interface SimplePaletteColorOptions {
     backgroundColor?: string;
     mainTextColor?: string;
-    lightTextColor?: string;
+    secondTextColor?: string;
     activeTextColor?: string;
+    borderColor?: string;
   }
 }
 

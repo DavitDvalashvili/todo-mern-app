@@ -26,6 +26,8 @@ const Header = () => {
       alignItems="center"
       width="100%"
       bgcolor="unset"
+      maxWidth="540px"
+      margin="0px auto"
     >
       <img
         src={windowWidth && windowWidth < 1440 ? todoMobile : todoDesktop}
@@ -33,7 +35,7 @@ const Header = () => {
         style={{ backgroundColor: "unset" }}
       />
       <img
-        style={{ backgroundColor: "unset" }}
+        style={{ backgroundColor: "unset", cursor: "pointer" }}
         onClick={() => {
           dispatch(changeTheme());
         }}

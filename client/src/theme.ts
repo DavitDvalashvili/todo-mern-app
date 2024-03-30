@@ -17,11 +17,12 @@ export const lightTheme = createTheme({
   },
   palette: {
     primary: {
-      main: "#FFFFFF",
+      main: "#FFF",
       backgroundColor: "#FAFAFA",
       mainTextColor: "#494C6B",
-      lightTextColor: "#9495A5",
+      secondTextColor: "#9495A5",
       activeTextColor: "#3A7CFD",
+      borderColor: "#E3E4F1",
     },
   },
 });
@@ -46,8 +47,9 @@ export const darkTheme = createTheme({
       main: "#25273D",
       backgroundColor: "#171823",
       mainTextColor: "#C8CBE7",
-      lightTextColor: "#5B5E7E",
+      secondTextColor: "#5B5E7E",
       activeTextColor: "#3A7CFD",
+      borderColor: "#393A4B",
     },
   },
 });

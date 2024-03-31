@@ -1,19 +1,24 @@
 import todoModel from "../models/todo.model.js";
 
 export const getTodo = async (req, res, next) => {
-  const active = req.query.active;
+  const filterTerm = req.params.id;
   const order = req.query.order || "desc"; // Default order is "desc"
   const sort = "createdAt";
 
   try {
     let todo;
 
-    if (active) {
-      todo = await todoModel.find({ active }).sort({ [sort]: order });
-    } else {
+    if (filterTerm == "All") {
       todo = await todoModel.find().sort({ [sort]: order });
+    } else if (filterTerm == "Active") {
+      todo = await todoModel.find({ active: true }).sort({ [sort]: order });
+    } else if (filterTerm == "Completed") {
+      todo = await todoModel.find({ active: false }).sort({ [sort]: order });
+    } else {
+      res.status(404).send({ message: "Todo not found" });
+      console.error(res.message);
+      return;
     }
-
     res.status(200).send(todo);
   } catch (error) {
     console.error(error);

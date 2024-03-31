@@ -6,7 +6,7 @@ import { updateTodo } from "../controllers/todo.controller.js";
 
 const router = express.Router();
 
-router.get("/getTodo", getTodo);
+router.get("/getTodo/:id", getTodo);
 router.post("/addTodo", addTodo);
 router.delete("/deleteTodo/:id", deleteTodo);
 router.put("/updateTodo/:id", updateTodo);

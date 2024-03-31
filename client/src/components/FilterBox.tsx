@@ -1,13 +1,24 @@
 import { Box } from "@mui/material";
 import { darkTheme, lightTheme } from "../theme";
-import { useAppSelector } from "../App/hook";
+import { useAppSelector, useAppDispatch } from "../App/hook";
 import { InitialTheme } from "../types";
+import { fetchTodo, filter, sort } from "../feature/todoSlice";
+import { useState, useEffect } from "react";
 
 const FilterBox = () => {
-  // Redux selectors
-  // Redux selectors
+  const [filterTerm, setFilterTerm] = useState<string>("All");
+  const [order, setOrder] = useState<string>("desc");
+  // Redux selector
   const theme: InitialTheme = useAppSelector((state) => state.theme);
   const darkMode = theme.darkMode;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(filter(filterTerm));
+    dispatch(sort(order));
+    dispatch(fetchTodo());
+  }, [filterTerm, dispatch, order]);
 
   return (
     <Box
@@ -47,6 +58,13 @@ const FilterBox = () => {
               ? darkTheme.palette.primary.hoverColor
               : lightTheme.palette.primary.hoverColor,
           },
+          color:
+            filterTerm == "All"
+              ? lightTheme.palette.primary.activeTextColor
+              : "",
+        }}
+        onClick={() => {
+          setFilterTerm("All");
         }}
       >
         All
@@ -59,6 +77,13 @@ const FilterBox = () => {
               ? darkTheme.palette.primary.hoverColor
               : lightTheme.palette.primary.hoverColor,
           },
+          color:
+            filterTerm == "Active"
+              ? lightTheme.palette.primary.activeTextColor
+              : "",
+        }}
+        onClick={() => {
+          setFilterTerm("Active");
         }}
       >
         Active
@@ -71,34 +96,51 @@ const FilterBox = () => {
               ? darkTheme.palette.primary.hoverColor
               : lightTheme.palette.primary.hoverColor,
           },
+          color:
+            filterTerm == "Completed"
+              ? lightTheme.palette.primary.activeTextColor
+              : "",
+        }}
+        onClick={() => {
+          setFilterTerm("Completed");
         }}
       >
         Completed
       </Box>
-      <Box
-        sx={{
-          cursor: "pointer",
-          "&:hover": {
-            color: darkMode
-              ? darkTheme.palette.primary.hoverColor
-              : lightTheme.palette.primary.hoverColor,
-          },
-        }}
-      >
-        Newest
-      </Box>
-      <Box
-        sx={{
-          cursor: "pointer",
-          "&:hover": {
-            color: darkMode
-              ? darkTheme.palette.primary.hoverColor
-              : lightTheme.palette.primary.hoverColor,
-          },
-        }}
-      >
-        Oldest
-      </Box>
+      {order == "asc" && (
+        <Box
+          sx={{
+            cursor: "pointer",
+            "&:hover": {
+              color: darkMode
+                ? darkTheme.palette.primary.hoverColor
+                : lightTheme.palette.primary.hoverColor,
+            },
+          }}
+          onClick={() => {
+            setOrder("desc");
+          }}
+        >
+          Newest
+        </Box>
+      )}
+      {order == "desc" && (
+        <Box
+          sx={{
+            cursor: "pointer",
+            "&:hover": {
+              color: darkMode
+                ? darkTheme.palette.primary.hoverColor
+                : lightTheme.palette.primary.hoverColor,
+            },
+          }}
+          onClick={() => {
+            setOrder("asc");
+          }}
+        >
+          Oldest
+        </Box>
+      )}
     </Box>
   );
 };

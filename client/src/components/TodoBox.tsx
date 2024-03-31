@@ -1,20 +1,31 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { useAppSelector, useAppDispatch } from "../App/hook";
+import { fetchTodo } from "../feature/todoSlice";
+import { useEffect } from "react";
 
 const TodoBox = () => {
+  // Redux selector
+  const todo = useAppSelector((state) => state.todo).todo;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodo());
+  }, [dispatch]);
+
   return (
     <>
-      <Box height="64px" width="100%">
-        todo1
-      </Box>
-      <Box height="64px" width="100%">
-        todo2
-      </Box>
-      <Box height="64px" width="100%">
-        todo3
-      </Box>
-      <Box height="64px" width="100%">
-        todo4
-      </Box>
+      {todo.map((todoItem) => (
+        <Box
+          key={todoItem.id}
+          display="FLEX"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography>{todoItem.todo}</Typography>
+          <Typography>{todoItem.active}</Typography>
+        </Box>
+      ))}
     </>
   );
 };

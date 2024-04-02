@@ -2,16 +2,16 @@ export type InitialTheme = {
   darkMode: boolean;
 };
 
-export type todoItem = {
+export interface TodoItem {
   id: string;
   todo: string;
   active: boolean;
-};
+}
 
-export type InitialState = {
-  todo: todoItem[];
+export interface InitialState {
+  todos: TodoItem[];
   error: string;
   loading: boolean;
   filterTerm: string;
-  order: string;
-};
+  sortOrder: string;
+}

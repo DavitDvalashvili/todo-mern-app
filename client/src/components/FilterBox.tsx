@@ -2,12 +2,12 @@ import { Box } from "@mui/material";
 import { darkTheme, lightTheme } from "../theme";
 import { useAppSelector, useAppDispatch } from "../App/hook";
 import { InitialTheme } from "../types";
-import { fetchTodo, filter, sort } from "../feature/todoSlice";
+import { filter, sort } from "../feature/todoSlice";
 import { useState, useEffect } from "react";
 
 const FilterBox = () => {
   const [filterTerm, setFilterTerm] = useState<string>("All");
-  const [order, setOrder] = useState<string>("desc");
+  const [sortOrder, setSortOrder] = useState<string>("desc");
   // Redux selector
   const theme: InitialTheme = useAppSelector((state) => state.theme);
   const darkMode = theme.darkMode;
@@ -16,9 +16,8 @@ const FilterBox = () => {
 
   useEffect(() => {
     dispatch(filter(filterTerm));
-    dispatch(sort(order));
-    dispatch(fetchTodo());
-  }, [filterTerm, dispatch, order]);
+    dispatch(sort(sortOrder));
+  }, [filterTerm, dispatch, sortOrder]);
 
   return (
     <Box
@@ -107,7 +106,7 @@ const FilterBox = () => {
       >
         Completed
       </Box>
-      {order == "asc" && (
+      {sortOrder == "asc" && (
         <Box
           sx={{
             cursor: "pointer",
@@ -118,13 +117,13 @@ const FilterBox = () => {
             },
           }}
           onClick={() => {
-            setOrder("desc");
+            setSortOrder("desc");
           }}
         >
           Newest
         </Box>
       )}
-      {order == "desc" && (
+      {sortOrder == "desc" && (
         <Box
           sx={{
             cursor: "pointer",
@@ -135,7 +134,7 @@ const FilterBox = () => {
             },
           }}
           onClick={() => {
-            setOrder("asc");
+            setSortOrder("asc");
           }}
         >
           Oldest

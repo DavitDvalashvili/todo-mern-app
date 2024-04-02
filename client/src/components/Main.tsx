@@ -1,17 +1,36 @@
 import { Box } from "@mui/material";
 import { darkTheme, lightTheme } from "../theme";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import { useAppSelector } from "../App/hook";
+import {
+  useAppSelector,
+  //useAppDispatch
+} from "../App/hook";
 import { InitialTheme } from "../types";
 import { useWindowSize } from "@uidotdev/usehooks";
 import TodoContainer from "./TodoContainer";
+//import { addTodo } from "../feature/todoSlice";
+import { useState } from "react";
 
 const Main = () => {
   const windowWidth = useWindowSize().width;
 
+  const [todoText, setTodoText] = useState("");
+
   // Redux selectors
   const theme: InitialTheme = useAppSelector((state) => state.theme);
   const darkMode = theme.darkMode;
+  //const dispatch = useAppDispatch();
+
+  // const handleAddTodo = () => {
+  //   if (todoText.trim() !== "") {
+  //     dispatch(addTodo(todoText.trim()));
+  //     setTodoText("");
+  //   }
+  // };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodoText(e.target.value);
+  };
 
   return (
     <>
@@ -57,6 +76,7 @@ const Main = () => {
           justifyContent="center"
           alignItems="center"
           borderRadius="50%"
+          //onClick={handleAddTodo}
           sx={{
             width: {
               xs: "22px",
@@ -113,6 +133,8 @@ const Main = () => {
             fontWeight: lightTheme.typography.fontWeightRegular,
           }}
           placeholder="Create a new todo…"
+          value={todoText}
+          onChange={handleInputChange}
         />
       </Box>
       <TodoContainer />

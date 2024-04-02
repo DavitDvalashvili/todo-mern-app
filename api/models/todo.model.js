@@ -8,7 +8,7 @@ const TodoSchema = new mongoose.Schema(
       require: true,
     },
     active: {
-      type: String,
+      type: Boolean,
       default: true,
     },
     createdAt: {

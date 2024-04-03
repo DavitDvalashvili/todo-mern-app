@@ -58,6 +58,18 @@ export const updateTodo = createAsyncThunk(
   }
 );
 
+export const deleteTodo = createAsyncThunk(
+  "todo/deleteTodo",
+  async (deletedTodo: TodoItem) => {
+    const response = await axios.delete(
+      `${Api_Url}/deleteTodo/${deletedTodo.id}`
+    );
+    const data = response.data;
+    if (response?.status === 200) return deletedTodo;
+    return data;
+  }
+);
+
 const todoSlice = createSlice({
   name: "todo",
   initialState: initialTodoState,
@@ -98,6 +110,13 @@ const todoSlice = createSlice({
       if (index !== -1) {
         state.todos[index] = action.payload;
       }
+    });
+    builder.addCase(deleteTodo.fulfilled, (state, action) => {
+      const index = state.todos.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      state.todos.splice(index, 1);
+      console.log(action.payload);
     });
   },
 });

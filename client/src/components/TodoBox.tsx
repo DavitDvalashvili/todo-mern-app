@@ -5,15 +5,17 @@ import {
   updateTodo,
   UpdateMode,
   UpdateTargetTodo,
+  deleteTodo,
 } from "../feature/todoSlice";
 import { useEffect } from "react";
 import { TodoItem } from "../types";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const TodoBox = () => {
   // Redux selector
-  const { todos, filterTerm, sortOrder, updateTargetTodo } = useAppSelector(
-    (state) => state.todo
-  );
+  const { todos, filterTerm, sortOrder, updateTargetTodo, updateMode } =
+    useAppSelector((state) => state.todo);
 
   const dispatch = useAppDispatch();
 
@@ -28,9 +30,15 @@ const TodoBox = () => {
     dispatch(updateTodo(updatedTodo));
   };
 
-  const handleClick = (todoItem: TodoItem) => {
-    dispatch(UpdateTargetTodo(todoItem));
-    dispatch(UpdateMode());
+  const deleteTodoFunction = (deleteTargetTodo: TodoItem) => {
+    dispatch(deleteTodo(deleteTargetTodo));
+  };
+
+  const handleUpdateClick = (todoItem: TodoItem) => {
+    if (!updateMode) {
+      dispatch(UpdateTargetTodo(todoItem));
+      dispatch(UpdateMode());
+    }
   };
 
   return (
@@ -52,13 +60,16 @@ const TodoBox = () => {
               >
                 {todoItem.active.toString()}
               </Typography>
-              <div
+              <CloseOutlinedIcon
                 onClick={() => {
-                  handleClick(todoItem);
+                  deleteTodoFunction(todoItem);
                 }}
-              >
-                update
-              </div>
+              />
+              <EditOutlinedIcon
+                onClick={() => {
+                  handleUpdateClick(todoItem);
+                }}
+              />
             </Box>
           )
       )}

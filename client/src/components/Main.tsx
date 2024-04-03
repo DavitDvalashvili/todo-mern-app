@@ -2,10 +2,7 @@ import { Box } from "@mui/material";
 import { darkTheme, lightTheme } from "../theme";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useAppSelector, useAppDispatch } from "../App/hook";
-import {
-  InitialTheme,
-  //TodoItem
-} from "../types";
+import { InitialTheme } from "../types";
 import { useWindowSize } from "@uidotdev/usehooks";
 import TodoContainer from "./TodoContainer";
 import { addTodo, updateTodo, UpdateMode } from "../feature/todoSlice";
@@ -35,7 +32,13 @@ const Main = () => {
   };
 
   const handleAddTodo = () => {
-    addNewTodo();
+    if (updateMode) {
+      updateTodoFunction();
+      dispatch(UpdateMode());
+      return;
+    } else {
+      addNewTodo();
+    }
   };
 
   const addNewTodo = () => {
@@ -62,7 +65,7 @@ const Main = () => {
         dispatch(UpdateMode());
         return;
       } else {
-        //addNewTodo();
+        addNewTodo();
       }
     }
   };
@@ -75,7 +78,6 @@ const Main = () => {
     if (updateMode) {
       setTodoText(updateTargetTodo.todo);
     }
-    console.log(updateMode);
   }, [updateMode, updateTargetTodo]);
 
   return (

@@ -1,15 +1,17 @@
 import { Box } from "@mui/material";
 import { darkTheme, lightTheme } from "../theme";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { useAppSelector, useAppDispatch } from "../App/hook";
 import {
-  useAppSelector,
-  //useAppDispatch
-} from "../App/hook";
-import { InitialTheme } from "../types";
+  InitialTheme,
+  //TodoItem
+} from "../types";
 import { useWindowSize } from "@uidotdev/usehooks";
 import TodoContainer from "./TodoContainer";
-//import { addTodo } from "../feature/todoSlice";
-import { useState } from "react";
+import { addTodo, updateTodo, UpdateMode } from "../feature/todoSlice";
+import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Main = () => {
   const windowWidth = useWindowSize().width;
@@ -18,19 +20,63 @@ const Main = () => {
 
   // Redux selectors
   const theme: InitialTheme = useAppSelector((state) => state.theme);
-  const darkMode = theme.darkMode;
-  //const dispatch = useAppDispatch();
+  const { updateMode, updateTargetTodo } = useAppSelector(
+    (state) => state.todo
+  );
 
-  // const handleAddTodo = () => {
-  //   if (todoText.trim() !== "") {
-  //     dispatch(addTodo(todoText.trim()));
-  //     setTodoText("");
-  //   }
-  // };
+  const darkMode = theme.darkMode;
+  const dispatch = useAppDispatch();
+
+  const handleError = (message: string | undefined) => {
+    toast.error(message, {
+      position: "bottom-center",
+      autoClose: 1000,
+    });
+  };
+
+  const handleAddTodo = () => {
+    addNewTodo();
+  };
+
+  const addNewTodo = () => {
+    if (todoText.trim() == "") {
+      handleError("Fill the field to dd new todo");
+      return;
+    } else {
+      const newTodo = { todo: todoText };
+      dispatch(addTodo(newTodo));
+      setTodoText(" ");
+    }
+  };
+
+  const updateTodoFunction = () => {
+    const updatedTodo = { ...updateTargetTodo, todo: todoText };
+    dispatch(updateTodo(updatedTodo));
+    setTodoText("");
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      if (updateMode) {
+        updateTodoFunction();
+        dispatch(UpdateMode());
+        return;
+      } else {
+        //addNewTodo();
+      }
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoText(e.target.value);
   };
+
+  useEffect(() => {
+    if (updateMode) {
+      setTodoText(updateTargetTodo.todo);
+    }
+    console.log(updateMode);
+  }, [updateMode, updateTargetTodo]);
 
   return (
     <>
@@ -76,7 +122,7 @@ const Main = () => {
           justifyContent="center"
           alignItems="center"
           borderRadius="50%"
-          //onClick={handleAddTodo}
+          onClick={handleAddTodo}
           sx={{
             width: {
               xs: "22px",
@@ -135,8 +181,10 @@ const Main = () => {
           placeholder="Create a new todo…"
           value={todoText}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
       </Box>
+      <ToastContainer />
       <TodoContainer />
     </>
   );

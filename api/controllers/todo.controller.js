@@ -8,17 +8,24 @@ export const getTodo = async (req, res, next) => {
   try {
     let todo;
 
-    if (filterTerm == "All") {
+    if (filterTerm === "All") {
       todo = await todoModel.find().sort({ [sort]: order });
-    } else if (filterTerm == "Active") {
+    } else if (filterTerm === "Active") {
       todo = await todoModel.find({ active: true }).sort({ [sort]: order });
-    } else if (filterTerm == "Completed") {
+    } else if (filterTerm === "Completed") {
       todo = await todoModel.find({ active: false }).sort({ [sort]: order });
     } else {
-      res.status(404).send({ message: "Todo not found" });
-      console.error(res.message);
+      // If the filterTerm doesn't match any expected value, send a 400 Bad Request response
+      res.status(400).send({ message: "Invalid filterTerm" });
       return;
     }
+
+    // Check if todo is empty
+    if (todo.length === 0) {
+      res.status(404).send({ message: "No todos found" });
+      return;
+    }
+
     res.status(200).send(todo);
   } catch (error) {
     console.error(error);

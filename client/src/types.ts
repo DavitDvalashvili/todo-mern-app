@@ -14,4 +14,6 @@ export interface InitialState {
   loading: boolean;
   filterTerm: string;
   sortOrder: string;
+  updateMode: boolean;
+  updateTargetTodo: TodoItem;
 }

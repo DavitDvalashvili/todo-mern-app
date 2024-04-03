@@ -1,43 +1,69 @@
 import { Box, Typography } from "@mui/material";
 import { useAppSelector, useAppDispatch } from "../App/hook";
-import { fetchTodoData } from "../feature/todoSlice";
+import {
+  fetchTodoData,
+  updateTodo,
+  UpdateMode,
+  UpdateTargetTodo,
+} from "../feature/todoSlice";
 import { useEffect } from "react";
+import { TodoItem } from "../types";
 
 const TodoBox = () => {
   // Redux selector
-  const { todos, filterTerm } = useAppSelector((state) => state.todo);
+  const { todos, filterTerm, sortOrder, updateTargetTodo } = useAppSelector(
+    (state) => state.todo
+  );
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    filterTerm && dispatch(fetchTodoData(filterTerm));
-  }, [dispatch, filterTerm]);
+    if (filterTerm && sortOrder) {
+      dispatch(fetchTodoData({ filterTerm, sortOrder }));
+    }
+  }, [dispatch, filterTerm, sortOrder]);
+
+  const toggleTodoStatus = (initialTodo: TodoItem) => {
+    const updatedTodo = { ...initialTodo, active: !initialTodo.active };
+    dispatch(updateTodo(updatedTodo));
+  };
+
+  const handleClick = (todoItem: TodoItem) => {
+    dispatch(UpdateTargetTodo(todoItem));
+    dispatch(UpdateMode());
+  };
 
   return (
     <>
-      {todos.map((todoItem) => (
-        <Box
-          onClick={() => {
-            console.log(typeof todoItem.active);
-          }}
-          key={todoItem.id}
-          display="FLEX"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography>{todoItem.todo}</Typography>
-          <Typography>{todoItem.active.toString()}</Typography>
-        </Box>
-      ))}
+      {todos.map(
+        (todoItem, index) =>
+          index !== todos.indexOf(updateTargetTodo) && (
+            <Box
+              key={todoItem.id}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography>{todoItem.todo}</Typography>
+              <Typography
+                onClick={() => {
+                  toggleTodoStatus(todoItem);
+                }}
+              >
+                {todoItem.active.toString()}
+              </Typography>
+              <div
+                onClick={() => {
+                  handleClick(todoItem);
+                }}
+              >
+                update
+              </div>
+            </Box>
+          )
+      )}
     </>
   );
 };
 
 export default TodoBox;
-
-// const handleClick1 = (initialTodo: todoItem) => {
-//   console.log(active);
-//   //console.log("Initial Todo:", typeof initialTodo.active);
-//   //const updatedTodo = { ...initialTodo, active: !initialTodo.active };
-//   //console.log("Updated Todo:", typeof updatedTodo.active);
-// };

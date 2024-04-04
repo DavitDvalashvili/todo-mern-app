@@ -4,7 +4,7 @@ import axios from "axios";
 import { TodoItem } from "../types";
 
 // API base URL
-const Api_Url = "http://localhost:3002/api";
+const Api_Url = "https://todo-mern-app-api.vercel.app/api";
 
 // Initial state for todo slice
 const initialTodoState: InitialState = {

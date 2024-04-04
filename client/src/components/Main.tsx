@@ -169,6 +169,7 @@ const Main = () => {
         <input
           type="text"
           style={{
+            width: "100%",
             border: "none",
             outline: "none",
             color: darkMode

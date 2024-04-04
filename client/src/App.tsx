@@ -23,9 +23,13 @@ function App() {
             margin: "0px",
           },
           body: {
+            scrollbarWidth: "none",
             backgroundColor: darkMode
               ? darkTheme.palette.primary.backgroundColor
               : lightTheme.palette.primary.backgroundColor,
+          },
+          "body::-webkit-scrollbar": {
+            display: "none",
           },
         }}
       />

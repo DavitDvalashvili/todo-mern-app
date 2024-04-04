@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
 import { darkTheme, lightTheme } from "../theme";
-import { useAppSelector } from "../App/hook";
+import { useAppSelector, useAppDispatch } from "../App/hook";
 import { InitialTheme } from "../types";
 import FilterBox from "./FilterBox";
 import { useWindowSize } from "@uidotdev/usehooks";
 import TodoBox from "./TodoBox";
+import { clearCompletedTodo } from "../feature/todoSlice";
 
 const TodoContainer = () => {
   const windowWidth = useWindowSize().width;
@@ -12,6 +13,14 @@ const TodoContainer = () => {
   // Redux selectors
   const theme: InitialTheme = useAppSelector((state) => state.theme);
   const darkMode = theme.darkMode;
+
+  const { todos } = useAppSelector((state) => state.todo);
+
+  const dispatch = useAppDispatch();
+
+  const handleClearCompletedTodo = () => {
+    dispatch(clearCompletedTodo());
+  };
 
   return (
     <Box maxWidth="540px" width="100%" marginX="auto">
@@ -69,7 +78,7 @@ const TodoContainer = () => {
               },
             }}
           >
-            5 items left
+            {`${todos.length} items left`}
           </Box>
           {windowWidth && windowWidth >= 1440 && <FilterBox />}
           <Box
@@ -81,6 +90,7 @@ const TodoContainer = () => {
                   : lightTheme.palette.primary.hoverColor,
               },
             }}
+            onClick={handleClearCompletedTodo}
           >
             Clear Completed
           </Box>

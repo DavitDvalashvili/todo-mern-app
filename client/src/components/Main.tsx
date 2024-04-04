@@ -127,12 +127,12 @@ const Main = () => {
           onClick={handleAddTodo}
           sx={{
             width: {
-              xs: "22px",
-              lg: "24px",
+              xs: "20px",
+              lg: "22px",
             },
             height: {
-              xs: "22px",
-              lg: "24px",
+              xs: "20px",
+              lg: "22px",
             },
             cursor: "pointer",
             transition: "all 2s ease",
@@ -155,12 +155,12 @@ const Main = () => {
                 : lightTheme.palette.primary.secondTextColor,
               borderRadius: "50%",
               width: {
-                xs: "20px",
-                lg: "22px",
+                xs: "16px",
+                lg: "18px",
               },
               height: {
-                xs: "20px",
-                lg: "22px",
+                xs: "16px",
+                lg: "18px",
               },
             }}
           />

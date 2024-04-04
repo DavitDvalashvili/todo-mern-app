@@ -20,12 +20,6 @@ export const getTodo = async (req, res, next) => {
       return;
     }
 
-    // Check if todo is empty
-    if (todo.length === 0) {
-      res.status(404).send({ message: "No todos found" });
-      return;
-    }
-
     res.status(200).send(todo);
   } catch (error) {
     console.error(error);
@@ -51,30 +45,39 @@ export const addTodo = async (req, res, next) => {
 };
 
 export const deleteTodo = async (req, res, next) => {
+  const id = req.params.id;
   try {
-    const id = req.params.id;
-
     if (!id) {
       // If 'id' parameter is not provided, return 404 Not Found response
       return res.status(404).send({ message: "Task not found" });
-    } else if (id === "completed") {
-      // If 'id' parameter is provided and equals "completed", delete all active=false todo
-      const deleteResult = await todoModel.deleteMany({ active: false });
-      if (deleteResult.deletedCount === 0) {
-        return res.status(404).send({ message: "No completed tasks found" });
-      }
     } else {
-      // If 'id' parameter is provided and not equal to "completed", delete the todo with that id
       const deleteTodo = await todoModel.findByIdAndDelete(id);
       if (!deleteTodo) {
         return res.status(404).send({ message: "Task not found" });
       }
     }
-
     res.status(200).send({ message: "Tasks deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Internal server error" });
+  }
+};
+
+export const clearCompletedTodo = async (req, res, next) => {
+  try {
+    const deleteResult = await todoModel.deleteMany({ active: false });
+
+    if (deleteResult.deletedCount === 0) {
+      return res.status(404).send({ message: "No completed tasks found" });
+    }
+
+    // Return a success message indicating that completed tasks are deleted
+    return res
+      .status(200)
+      .send({ message: "Completed tasks deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: "Internal server error" });
   }
 };
 

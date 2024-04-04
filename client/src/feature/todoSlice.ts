@@ -70,6 +70,15 @@ export const deleteTodo = createAsyncThunk(
   }
 );
 
+export const clearCompletedTodo = createAsyncThunk(
+  "todo/clearCompletedTodo",
+  async () => {
+    const response = await axios.delete(`${Api_Url}/clearCompletedTodo`);
+    const data = response.data;
+    return data;
+  }
+);
+
 const todoSlice = createSlice({
   name: "todo",
   initialState: initialTodoState,
@@ -116,7 +125,9 @@ const todoSlice = createSlice({
         (todo) => todo.id === action.payload.id
       );
       state.todos.splice(index, 1);
-      console.log(action.payload);
+    });
+    builder.addCase(clearCompletedTodo.fulfilled, (state) => {
+      state.todos = state.todos.filter((todo) => todo.active === true);
     });
   },
 });

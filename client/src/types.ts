@@ -6,6 +6,7 @@ export interface TodoItem {
   id: string;
   todo: string;
   active: boolean;
+  updatedAt: string;
 }
 
 export interface InitialState {
@@ -17,3 +18,8 @@ export interface InitialState {
   updateMode: boolean;
   updateTargetTodo: TodoItem;
 }
+
+export type time = {
+  timestamp: string;
+  timeAgo: string;
+};

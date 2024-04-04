@@ -3,8 +3,10 @@ import { InitialState } from "../types";
 import axios from "axios";
 import { TodoItem } from "../types";
 
+// API base URL
 const Api_Url = "http://localhost:3002/api";
 
+// Initial state for todo slice
 const initialTodoState: InitialState = {
   todos: [],
   error: "",
@@ -16,9 +18,11 @@ const initialTodoState: InitialState = {
     id: "",
     todo: "",
     active: false,
+    updatedAt: "",
   },
 };
 
+// Async thunks for fetching, adding, updating, deleting, and clearing todos
 export const fetchTodoData = createAsyncThunk(
   "todo/fetchTodo",
   async ({
@@ -79,19 +83,24 @@ export const clearCompletedTodo = createAsyncThunk(
   }
 );
 
+// Todo slice with reducers and extra reducers
 const todoSlice = createSlice({
   name: "todo",
   initialState: initialTodoState,
   reducers: {
+    // Reducer to update filter term
     filter: (state, action: PayloadAction<string>) => {
       state.filterTerm = action.payload;
     },
+    // Reducer to update sort order
     sort: (state, action: PayloadAction<string>) => {
       state.sortOrder = action.payload;
     },
+    // Reducer to toggle update mode
     UpdateMode: (state) => {
       state.updateMode = !state.updateMode;
     },
+    // Reducer to set target todo for updating
     UpdateTargetTodo: (state, action) => {
       state.updateTargetTodo = action.payload;
     },

@@ -9,13 +9,15 @@ import { changeTheme } from "../feature/themeSlice";
 import { InitialTheme } from "../types";
 
 const Header = () => {
+  // Getting window width using custom hook
   const windowWidth = useWindowSize().width;
 
   // Redux dispatcher
   const dispatch = useAppDispatch();
 
-  // Redux selectors
+  // Redux selectors to get theme
   const theme: InitialTheme = useAppSelector((state) => state.theme);
+  // Extracting darkMode value from theme
   const darkMode = theme.darkMode;
 
   return (

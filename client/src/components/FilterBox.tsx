@@ -6,14 +6,19 @@ import { filter, sort } from "../feature/todoSlice";
 import { useState, useEffect } from "react";
 
 const FilterBox = () => {
+  // State for filter term and sort order
   const [filterTerm, setFilterTerm] = useState<string>("All");
   const [sortOrder, setSortOrder] = useState<string>("desc");
-  // Redux selector
+
+  // Redux selector to get theme
   const theme: InitialTheme = useAppSelector((state) => state.theme);
+  // Extracting darkMode value from theme
   const darkMode = theme.darkMode;
 
+  // Redux dispatcher
   const dispatch = useAppDispatch();
 
+  // useEffect to dispatch filter and sort actions when filterTerm or sortOrder changes
   useEffect(() => {
     dispatch(filter(filterTerm));
     dispatch(sort(sortOrder));

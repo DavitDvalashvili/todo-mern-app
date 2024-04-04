@@ -6,10 +6,10 @@ import { useAppSelector } from "./App/hook";
 import { InitialTheme } from "./types";
 
 function App() {
-  // Redux dispatcher
-
   // Redux selectors
+  // Selecting the theme from Redux state
   const theme: InitialTheme = useAppSelector((state) => state.theme);
+  // Extracting darkMode value from theme
   const darkMode = theme.darkMode;
 
   return (

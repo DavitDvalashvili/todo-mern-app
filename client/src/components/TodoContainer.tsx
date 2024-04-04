@@ -8,6 +8,7 @@ import TodoBox from "./TodoBox";
 import { clearCompletedTodo } from "../feature/todoSlice";
 
 const TodoContainer = () => {
+  // Get window width using custom hook
   const windowWidth = useWindowSize().width;
 
   // Redux selectors
@@ -16,8 +17,10 @@ const TodoContainer = () => {
 
   const { todos } = useAppSelector((state) => state.todo);
 
+  // dispatch
   const dispatch = useAppDispatch();
 
+  // Handle clear completed todos
   const handleClearCompletedTodo = () => {
     dispatch(clearCompletedTodo());
   };

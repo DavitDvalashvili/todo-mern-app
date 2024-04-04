@@ -9,8 +9,9 @@ import { InitialTheme } from "../types";
 import Main from "./Main";
 
 const Layout = () => {
-  // Redux selectors
+  // Redux selectors to get theme
   const theme: InitialTheme = useAppSelector((state) => state.theme);
+  // Extracting darkMode value from theme
   const darkMode = theme.darkMode;
 
   return (

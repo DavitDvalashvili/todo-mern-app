@@ -26,21 +26,25 @@ const TodoBox = () => {
 
   const darkMode = theme.darkMode;
 
+  // Fetch todos when filter or sort order changes
   useEffect(() => {
     if (filterTerm && sortOrder) {
       dispatch(fetchTodoData({ filterTerm, sortOrder }));
     }
   }, [dispatch, filterTerm, sortOrder]);
 
+  // Toggle todo status between active and completed
   const toggleTodoStatus = (initialTodo: TodoItem) => {
     const updatedTodo = { ...initialTodo, active: !initialTodo.active };
     dispatch(updateTodo(updatedTodo));
   };
 
+  // Delete a todo
   const deleteTodoFunction = (deleteTargetTodo: TodoItem) => {
     dispatch(deleteTodo(deleteTargetTodo));
   };
 
+  // Handle click on edit icon to update a todo
   const handleUpdateClick = (todoItem: TodoItem) => {
     if (!updateMode) {
       dispatch(UpdateTargetTodo(todoItem));

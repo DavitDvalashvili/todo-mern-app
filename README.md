@@ -1,4 +1,4 @@
-# Todo Mean App
+# Todo Full Stack - MERN App
 
 ### Table of Contents
 

@@ -7,6 +7,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { useAppDispatch, useAppSelector } from "../App/hook";
 import { changeTheme } from "../feature/themeSlice";
 import { InitialTheme } from "../types";
+import { motion } from "framer-motion";
 
 const Header = () => {
   // Getting window width using custom hook
@@ -21,31 +22,37 @@ const Header = () => {
   const darkMode = theme.darkMode;
 
   return (
-    <Box
-      component="header"
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-      width="100%"
-      bgcolor="unset"
-      maxWidth="540px"
-      margin="0px auto"
+    <motion.div
+      initial={{ opacity: 0, x: 500 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 1 }}
     >
-      <img
-        src={windowWidth && windowWidth < 1440 ? todoMobile : todoDesktop}
-        alt="todoLogo"
-        style={{ backgroundColor: "unset" }}
-      />
-      <img
-        style={{ backgroundColor: "unset", cursor: "pointer" }}
-        onClick={() => {
-          dispatch(changeTheme());
-        }}
-        src={darkMode ? iconMoon : iconSun}
-        height={windowWidth && windowWidth < 1440 ? "20px" : "26px"}
-        alt="icon"
-      />
-    </Box>
+      <Box
+        component="header"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        width="100%"
+        bgcolor="unset"
+        maxWidth="540px"
+        margin="0px auto"
+      >
+        <img
+          src={windowWidth && windowWidth < 1440 ? todoMobile : todoDesktop}
+          alt="todoLogo"
+          style={{ backgroundColor: "unset" }}
+        />
+        <img
+          style={{ backgroundColor: "unset", cursor: "pointer" }}
+          onClick={() => {
+            dispatch(changeTheme());
+          }}
+          src={darkMode ? iconMoon : iconSun}
+          height={windowWidth && windowWidth < 1440 ? "20px" : "26px"}
+          alt="icon"
+        />
+      </Box>
+    </motion.div>
   );
 };
 

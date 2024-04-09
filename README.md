@@ -27,6 +27,7 @@
 - <img src="client/public/readme/MUI.png" width="25" style="top: 8px" /> _MUI: React components for Material Design UI._
 - <img src="client/public/readme/mongoose.png" width="25" style="top: 8px" /> _Mongoose: MongoDB object modeling for Node.js._
 - <img src="client/public/readme/reduxToolkit.png" width="25" style="top: 8px" /> _Redux Toolkit: A simplified and efficient way to manage state in Redux applications._
+- <img src="client/public/readme/motion.png" width="25" style="top: 8px" /> Framer Motion: React animation library for smooth, high-performance UI transitions.
 
 ### Interaction
 

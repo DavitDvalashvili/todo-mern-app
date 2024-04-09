@@ -31,6 +31,9 @@ function App() {
           "body::-webkit-scrollbar": {
             display: "none",
           },
+          "html::-webkit-scrollbar": {
+            display: "none",
+          },
         }}
       />
       <Layout />
